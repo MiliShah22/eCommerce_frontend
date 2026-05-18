@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-syne: 'Syne', sans-serif;
+  --font-dm: 'DM Sans', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-family: 'DM Sans', sans-serif;
+  background: #0a0a0f;
+  color: #f0f0f8;
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #22223a; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #2e2e50; }
+
+@layer utilities {
+  .font-syne { font-family: 'Syne', sans-serif; }
+  .font-dm { font-family: 'DM Sans', sans-serif; }
+  .text-text { color: #f0f0f8; }
+  .text-text-2 { color: #a0a0c0; }
+  .text-text-3 { color: #6060a0; }
+  .text-food { color: #ff6b35; }
+  .text-grocery { color: #00c896; }
+  .text-laundry { color: #7c6fff; }
+  .text-clothing { color: #ff4d9e; }
+  .text-gold { color: #f5c842; }
+  .bg-food { background-color: #ff6b35; }
+  .bg-grocery { background-color: #00c896; }
+  .bg-laundry { background-color: #7c6fff; }
+  .bg-clothing { background-color: #ff4d9e; }
+  .border-food { border-color: #ff6b35; }
+  .border-grocery { border-color: #00c896; }
+  .border-laundry { border-color: #7c6fff; }
+  .border-clothing { border-color: #ff4d9e; }
+  .border-gold { border-color: #f5c842; }
+  .bg-food\/10 { background-color: rgba(255,107,53,0.1); }
+  .bg-food\/15 { background-color: rgba(255,107,53,0.15); }
+  .bg-food\/20 { background-color: rgba(255,107,53,0.2); }
+  .bg-grocery\/10 { background-color: rgba(0,200,150,0.1); }
+  .bg-grocery\/15 { background-color: rgba(0,200,150,0.15); }
+  .bg-grocery\/20 { background-color: rgba(0,200,150,0.2); }
+  .bg-laundry\/10 { background-color: rgba(124,111,255,0.1); }
+  .bg-laundry\/15 { background-color: rgba(124,111,255,0.15); }
+  .bg-laundry\/20 { background-color: rgba(124,111,255,0.2); }
+  .bg-clothing\/10 { background-color: rgba(255,77,158,0.1); }
+  .bg-clothing\/15 { background-color: rgba(255,77,158,0.15); }
+  .bg-clothing\/20 { background-color: rgba(255,77,158,0.2); }
+  .bg-gold\/15 { background-color: rgba(245,200,66,0.15); }
+  .border-food\/30 { border-color: rgba(255,107,53,0.3); }
+  .border-grocery\/25 { border-color: rgba(0,200,150,0.25); }
+  .border-grocery\/30 { border-color: rgba(0,200,150,0.3); }
+  .border-laundry\/25 { border-color: rgba(124,111,255,0.25); }
+  .border-laundry\/30 { border-color: rgba(124,111,255,0.3); }
+  .border-clothing\/25 { border-color: rgba(255,77,158,0.25); }
+  .border-clothing\/30 { border-color: rgba(255,77,158,0.3); }
+  .border-gold\/25 { border-color: rgba(245,200,66,0.25); }
+}
