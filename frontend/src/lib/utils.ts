@@ -41,6 +41,7 @@ export function getServiceTextClass(service: ServiceType): string {
 }
 
 export function getStatusStyle(status: string): { bg: string; text: string; border: string } {
+
   const map: Record<string, { bg: string; text: string; border: string }> = {
     pending: { bg: 'bg-gold/15', text: 'text-gold', border: 'border-gold/25' },
     confirmed: { bg: 'bg-grocery/15', text: 'text-grocery', border: 'border-grocery/25' },

@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,*::before,*::after{box-sizing:border-box}
+html{font-family:'DM Sans',sans-serif;background:#0a0a0f;color:#f0f0f8;scroll-behavior:smooth}
+body{min-height:100vh}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22223a;border-radius:2px}
+
+.font-syne{font-family:'Syne',sans-serif}
+
+/* Service colors */
+.c-food{color:#ff6b35}.c-grocery{color:#00c896}.c-laundry{color:#7c6fff}.c-clothing{color:#ff4d9e}.c-gold{color:#f5c842}
+.bg-food{background-color:#ff6b35}.bg-grocery{background-color:#00c896}.bg-laundry{background-color:#7c6fff}.bg-clothing{background-color:#ff4d9e}
+.border-food{border-color:#ff6b35}.border-grocery{border-color:#00c896}.border-laundry{border-color:#7c6fff}.border-clothing{border-color:#ff4d9e}
