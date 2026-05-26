@@ -15,8 +15,8 @@ const TYPE_LABELS: Record<NotificationType, string> = {
   order: 'Orders', delivery: 'Delivery', promo: 'Promotions', payment: 'Payments', system: 'System'
 }
 
-function timeAgo(iso: string) {
-  const diff = (Date.now() - new Date(iso).getTime()) / 1000
+function timeAgo(iso: string, nowMs: number) {
+  const diff = (nowMs - new Date(iso).getTime()) / 1000
   if (diff < 60) return 'Just now'
   if (diff < 3600) return `${Math.floor(diff / 60)} minutes ago`
   if (diff < 86400) return `${Math.floor(diff / 3600)} hours ago`
@@ -27,6 +27,10 @@ export default function NotificationsPage() {
   const { notifications, markRead, markAllRead, remove, clearAll, getUnreadCount } = useNotificationStore()
   const router = useRouter()
   const unread = getUnreadCount()
+
+  const nowMs = typeof window !== 'undefined' ? Date.now() : new Date().getTime()
+  const todayStr = new Date(nowMs).toDateString()
+  const yesterdayStr = new Date(nowMs - 86400000).toDateString()
 
   const grouped = notifications.reduce((acc, n) => {
     const key = new Date(n.createdAt).toDateString()
@@ -71,7 +75,7 @@ export default function NotificationsPage() {
               <div key={date}>
                 <h3 className="text-xs font-semibold text-text-3 uppercase tracking-widest mb-3 flex items-center gap-2">
                   <div className="flex-1 h-px bg-white/[0.06]" />
-                  {date === new Date().toDateString() ? 'Today' : date === new Date(Date.now() - 86400000).toDateString() ? 'Yesterday' : date}
+                  {date === todayStr ? 'Today' : date === yesterdayStr ? 'Yesterday' : date}
                   <div className="flex-1 h-px bg-white/[0.06]" />
                 </h3>
                 <div className="space-y-2">
@@ -100,7 +104,7 @@ export default function NotificationsPage() {
                             </span>
                           </div>
                           <p className="text-xs text-text-2 leading-relaxed mb-2">{n.body}</p>
-                          <p className="text-[11px] text-text-3">{timeAgo(n.createdAt)}</p>
+                          <p className="text-[11px] text-text-3">{timeAgo(n.createdAt, nowMs)}</p>
                         </div>
                         <button onClick={e => { e.stopPropagation(); remove(n.id) }}
                           className="opacity-0 group-hover:opacity-100 w-7 h-7 rounded-lg flex items-center justify-center text-text-3 hover:text-red-400 hover:bg-red-400/10 transition-all flex-shrink-0 self-start">
