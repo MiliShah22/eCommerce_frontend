@@ -17,9 +17,14 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   const { addItem, getItemById, openCart } = useCartStore()
   const { has, toggle } = useWishlistStore()
   const [qty, setQty] = useState(1)
-  const [selectedColor, setSelectedColor] = useState(product?.colors?.[0] ?? '')
-  const [selectedSize, setSelectedSize] = useState(product?.sizes?.[0] ?? '')
+  const defaultColor = product?.colors?.[0] ?? ''
+  const defaultSize = product?.sizes?.[0] ?? ''
+
+  // Default selections (so cart always gets a valid variant when possible)
+  const [selectedColor, setSelectedColor] = useState(defaultColor)
+  const [selectedSize, setSelectedSize] = useState(defaultSize)
   const [activeImg, setActiveImg] = useState(0)
+
 
   if (!product) return (
     <>
@@ -39,9 +44,23 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   const related = PRODUCTS[product.service].filter(p => p.id !== product.id).slice(0, 4)
 
   const handleAddToCart = () => {
+    // If user didn’t explicitly select, fall back to first available option.
+    const finalColor = selectedColor || product.colors?.[0] || ''
+    const finalSize = selectedSize || product.sizes?.[0] || ''
+
     for (let i = 0; i < qty; i++) {
-      addItem({ productId: product.id, name: product.name, price: product.price, emoji: product.emoji, service: product.service, vendorId: product.vendorId, vendorName: product.vendor },
-        (selectedColor || selectedSize) ? { color: selectedColor, size: selectedSize } : undefined)
+      addItem(
+        {
+          productId: product.id,
+          name: product.name,
+          price: product.price,
+          emoji: product.emoji,
+          service: product.service,
+          vendorId: product.vendorId,
+          vendorName: product.vendor,
+        },
+        (finalColor || finalSize) ? { color: finalColor, size: finalSize } : undefined
+      )
     }
     toast.success(`${qty}× ${product.name} added!`, {
       style: { background: '#1e1e2e', color: '#f0f0f8', border: '1px solid rgba(255,255,255,0.07)', borderLeft: `3px solid ${color}` },
@@ -49,6 +68,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
     })
     openCart()
   }
+
 
   return (
     <>
@@ -84,7 +104,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             <p className="text-text-2 text-sm mb-4">by {product.vendor}</p>
 
             <div className="flex items-center gap-2 mb-5">
-              <div className="flex">{[1,2,3,4,5].map(s => <Star key={s} size={14} fill={s <= Math.round(product.rating) ? '#f5c842' : 'none'} stroke={s <= Math.round(product.rating) ? 'none' : '#6060a0'} />)}</div>
+              <div className="flex">{[1, 2, 3, 4, 5].map(s => <Star key={s} size={14} fill={s <= Math.round(product.rating) ? '#f5c842' : 'none'} stroke={s <= Math.round(product.rating) ? 'none' : '#6060a0'} />)}</div>
               <span className="text-sm font-bold text-gold">{product.rating}</span>
               <span className="text-xs text-text-3">({product.reviews} reviews)</span>
             </div>
@@ -173,7 +193,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           <h2 className="font-syne font-bold text-xl text-text mb-4">Customer Reviews</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[{ u: 'Priya S.', r: 5, t: 'Excellent quality!', b: 'Really loved it. Quick delivery and exactly as described. Will order again!', d: '2 days ago' },
-              { u: 'Rajan M.', r: 4, t: 'Good value for money', b: 'Pretty good for the price. Packaging was secure and product looks exactly like the photos.', d: '1 week ago' }].map((review, i) => (
+            { u: 'Rajan M.', r: 4, t: 'Good value for money', b: 'Pretty good for the price. Packaging was secure and product looks exactly like the photos.', d: '1 week ago' }].map((review, i) => (
               <div key={i} className="bg-card border border-white/[0.07] rounded-2xl p-4">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-9 h-9 rounded-full bg-bg-4 flex items-center justify-center font-syne font-bold text-sm text-text">{review.u[0]}</div>
@@ -181,7 +201,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     <p className="text-sm font-semibold text-text">{review.u}</p>
                     <p className="text-xs text-text-3">{review.d}</p>
                   </div>
-                  <div className="flex">{[1,2,3,4,5].map(s => <Star key={s} size={12} fill={s <= review.r ? '#f5c842' : 'none'} stroke={s <= review.r ? 'none' : '#6060a0'} />)}</div>
+                  <div className="flex">{[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} fill={s <= review.r ? '#f5c842' : 'none'} stroke={s <= review.r ? 'none' : '#6060a0'} />)}</div>
                 </div>
                 <p className="text-sm font-semibold text-text mb-1">{review.t}</p>
                 <p className="text-xs text-text-2 leading-relaxed">{review.b}</p>
